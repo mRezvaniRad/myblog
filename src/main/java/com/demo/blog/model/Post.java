@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,7 +19,9 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
     private String body;
+    @NotNull
     private String cover;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -27,10 +30,12 @@ public class Post {
 
     @ManyToOne
     @JoinColumn(name = "user_fk")
+    @NotNull
     private User user;
 
     @ManyToMany
     @JoinColumn(name = "tbl_post_category")
+    @NotNull
     private List<Category> categories;
 
     public Long getId() {
@@ -79,5 +84,13 @@ public class Post {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 }

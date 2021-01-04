@@ -1,6 +1,11 @@
 package com.demo.blog.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -10,12 +15,14 @@ import java.util.List;
 
 @Entity
 @Table(name = "tbl_category")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class , property = "id")
 public class Category  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
+    @NotNull
+   private String title;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     @Column(name = "updated_at")

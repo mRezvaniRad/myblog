@@ -5,6 +5,10 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,16 +19,21 @@ import java.util.List;
 @Entity
 @Table(name = "tbl_user")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class ,property = "id")
-public class User {
+public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty(message = "the name must not be empty")
+    @Size(min =5)
     private String name;
+    @NotNull(message = "the password must not be null")
     private String password;
     private String cover;
 
     @Column(unique = true)
+    @NotNull
+    @Email(message = "email should be a valid email")
     private String email;
 
     @Column(name = "created_at")
